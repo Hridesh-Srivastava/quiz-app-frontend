@@ -13,62 +13,62 @@ export default function AboutUs() {
 
     if (path === "/") {
       return {
-        title: "Welcome to Our Quiz Platform",
+        title: "Welcome to HSST Quiz Hub",
         description:
-          "Our interactive quiz platform is designed to test and enhance your knowledge in various subjects. We believe in making learning fun and engaging through well-crafted quizzes that challenge your understanding and help you grow.",
+          "The HSST Quiz Hub is an initiative by the Creative Cell Bootcamp of Himalayan School of Science and Technology, Swami Rama Himalayan University. Our platform is designed to enhance learning through interactive assessments that challenge students' understanding of various technical subjects.",
         features: [
-          "User-friendly interface for seamless quiz-taking experience",
-          "Secure registration system to track your progress",
+          "User-friendly interface designed by HSST students",
+          "Secure registration system to track your academic progress",
           "Immediate feedback on your performance",
-          "Comprehensive result analysis to help you improve",
+          "Comprehensive result analysis to help identify areas for improvement",
         ],
       }
     } else if (path === "/quiz") {
       return {
-        title: "About Our Quiz System",
+        title: "About HSST Quiz System",
         description:
-          "Our quiz system is built with the latest technologies to provide you with a smooth and interactive experience. Each question is carefully crafted to test your knowledge and understanding of the subject matter.",
+          "Our quiz system is developed by the Creative Cell Bootcamp at HSST, SRHU. Each question is carefully crafted by our members to align with the curriculum and test your understanding of key concepts.",
         features: [
-          "Randomized questions to ensure a unique experience each time",
-          "Progress tracking to help you monitor your advancement",
-          "Intuitive navigation between questions",
+          "Questions designed by experts",
+          "Progress tracking integrated with HSST academic systems",
+          "Intuitive navigation for a smooth quiz experience",
           "Ability to review and change answers before final submission",
         ],
       }
     } else if (path === "/result") {
       return {
-        title: "Understanding Your Results",
+        title: "Understanding Your Quiz Results",
         description:
-          "Our result analysis system provides you with detailed insights into your performance. We believe in transparency and helping you understand your strengths and areas for improvement.",
+          "The HSST result analysis system provides detailed insights into your performance. These results are designed to help both students and faculty identify strengths and areas for improvement in the learning process.",
         features: [
-          "Comprehensive breakdown of your score",
-          "Visual representation of your performance",
-          "Comparison with average scores",
-          "Personalized feedback based on your answers",
+          "Comprehensive breakdown of your score against HSST benchmarks",
+          "Visual representation of your performance across topics",
+          "Comparison with class averages",
+          "Personalized feedback based on HSST learning objectives",
         ],
       }
     } else if (path === "/admin") {
       return {
-        title: "Admin Dashboard Overview",
+        title: "HSST Quiz Admin Dashboard",
         description:
-          "The admin dashboard provides powerful tools to manage the quiz platform. From here, you can control all aspects of the quiz system, ensuring a smooth experience for all users.",
+          "The admin dashboard provides HSST faculty with powerful tools to manage the quiz platform. From here, instructors can control all aspects of the assessment process.",
         features: [
-          "Question management system",
-          "User data analytics",
-          "Performance monitoring tools",
-          "System configuration options",
+          "Question bank management system",
+          "Student performance analytics",
+          "Course-specific quiz configuration",
+          "Batch result processing and reporting",
         ],
       }
     } else {
       return {
-        title: "About Our Platform",
+        title: "About HSST Quiz Platform",
         description:
-          "Our platform is designed with user experience in mind. We strive to provide a seamless and enjoyable experience for all our users.",
+          "Our platform is designed with the HSST student experience in mind. We strive to provide a seamless and educational assessment tool for all our students.",
         features: [
-          "Modern and intuitive interface",
-          "Responsive design for all devices",
-          "Secure and reliable system",
-          "Continuous updates and improvements",
+          "Modern interface designed by HSST Creative Cell",
+          "Responsive design for access on all devices",
+          "Secure and reliable assessment system",
+          "Regular updates based on faculty and student feedback",
         ],
       }
     }
@@ -138,9 +138,10 @@ export default function AboutUs() {
         </ul>
 
         <div className="about-us-footer">
-          <p>© {new Date().getFullYear()} Quiz Platform. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Himalayan School of Science and Technology, SRHU</p>
+          <p>Developed by Creative Cell Bootcamp</p>
           <p>
-            For any inquiries, please contact <a href="mailto:support@quizplatform.com">support@quizplatform.com</a>
+            For any inquiries, please contact <a href="mailto:principal.hsst@srhu.edu.in">principal.hsst@srhu.edu.in</a>
           </p>
         </div>
       </div>

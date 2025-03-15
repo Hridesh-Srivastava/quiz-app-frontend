@@ -1,6 +1,7 @@
 "use client"
 import "../styles/result.css"
 import { Link } from "react-router-dom"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { resetAllAction } from "../redux/question_reducer"
 import { resetResultAction } from "../redux/result_reducer"
@@ -19,6 +20,13 @@ export default function Result() {
   const earnPoints = earnPoints_Number(result, answers, 5)
   const flag = earnPoints >= totalPoints * 0.5
   const percentage = (earnPoints / totalPoints) * 100
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      alert("Thank you for your participation!")
+    }, 500) 
+    return () => clearTimeout(timer)
+  }, [])
 
   usePublishResult({
     result,
@@ -41,7 +49,7 @@ export default function Result() {
     <div className="container result-container">
       <div className="result-header">
         <h1 className="result-title">Quiz Results</h1>
-        <p className="result-subtitle">Here's how you performed</p>
+        <p className="result-subtitle">Your TechQuiz Performance</p>
       </div>
 
       <div className="card result-card">

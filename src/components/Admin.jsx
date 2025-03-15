@@ -29,12 +29,12 @@ export default function Admin() {
 
   return (
     <div className="container admin-container">
-      <h1 className="title">Admin Dashboard</h1>
+      <h1 className="title">HSST Quiz Admin Dashboard</h1>
 
       <div className="card admin-card">
         <div className="admin-header">
-          <h2 className="admin-title">Quiz Management</h2>
-          <p className="admin-subtitle">Manage your quiz questions and data</p>
+          <h2 className="admin-title">HSST Quiz Management</h2>
+          <p className="admin-subtitle">Manage HSST TechQuiz questions and student data</p>
         </div>
 
         <div className="admin-actions">

@@ -74,7 +74,7 @@ export default function Quiz() {
 
   return (
     <div className="container quiz-container">
-      <h1 className="title">Quiz in Progress</h1>
+      <h1 className="title">HSST Quiz in Progress</h1>
 
       <div className="progress-bar">
         <div className="progress-fill" style={{ width: `${progressPercentage}%` }}></div>

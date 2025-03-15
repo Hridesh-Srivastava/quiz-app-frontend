@@ -53,7 +53,7 @@ export default function Main() {
 
   return (
     <div className="container">
-      <h1 className="title">Interactive Quiz Platform</h1>
+      <h1 className="title">HSST TechQuiz Hub</h1>
 
       <div className="welcome-section">
         <div className="rules-card">
@@ -75,7 +75,7 @@ export default function Main() {
               <line x1="16" y1="17" x2="8" y2="17"></line>
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
-            Quiz Guidelines
+            HSST Quiz Guidelines
           </h2>
           <ul className="rules-list">
             <li>You will be asked questions one after another.</li>
