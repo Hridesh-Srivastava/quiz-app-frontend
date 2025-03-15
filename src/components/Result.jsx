@@ -2,14 +2,11 @@
 import "../styles/result.css"
 import { Link } from "react-router-dom"
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { resetAllAction } from "../redux/question_reducer"
-import { resetResultAction } from "../redux/result_reducer"
+import { useSelector } from "react-redux"
 import { attempts_Number, earnPoints_Number } from "../helper/helper"
 import { usePublishResult } from "../hooks/setResult"
 
 export default function Result() {
-  const dispatch = useDispatch()
   const {
     questions: { queue, answers },
     result: { result, userId, email, registrationNumber, courseYear, section },
@@ -40,10 +37,6 @@ export default function Result() {
     achieved: flag ? "Passed" : "Failed",
   })
 
-  function onRestart() {
-    dispatch(resetAllAction())
-    dispatch(resetResultAction())
-  }
 
   return (
     <div className="container result-container">

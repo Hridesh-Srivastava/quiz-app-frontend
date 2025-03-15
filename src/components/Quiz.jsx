@@ -14,7 +14,7 @@ export default function Quiz() {
   const { queue, trace } = useSelector((state) => state.questions)
   const result = useSelector((state) => state.result.result)
   const dispatch = useDispatch()
-  const [{ isLoading, apiData, serverError }] = useFetchQuestion()
+  const [{ isLoading, serverError }] = useFetchQuestion()
 
   useEffect(() => {
     setChecked(result[trace])
