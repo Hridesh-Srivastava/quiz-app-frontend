@@ -16,9 +16,9 @@ export default function ResultTable() {
             <table>
                 <thead className='table-header'>
                     <tr className='table-row'>
-                        <td>Name</td>
+                        {/* <td>Name</td>
                         <td>Attempts</td>
-                        <td>Earn Points</td>
+                        <td>Earn Points</td> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -26,9 +26,9 @@ export default function ResultTable() {
                     {
                         data.map((v, i) => (
                             <tr className='table-body' key={i}>
-                                <td>{v?.username || ''}</td>
-                                <td>{v?.attempts || 0}</td>
-                                <td>{v?.points || 0}</td>
+                                {/* <td>{v?.username || ''}</td> */}
+                                {/* <td>{v?.attempts || 0}</td> */}
+                                {/* <td>{v?.points || 0}</td> */}
                                 {/* <td>{v?.achived || ""}</td> */}
                             </tr>
                         ))
