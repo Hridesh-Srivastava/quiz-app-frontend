@@ -1,44 +1,96 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
-/** create reducer */
-export const questionReducer = createSlice({
-    name: 'questions',
-    initialState : {
-        queue: [],
-        answers : [],
-        trace : 0
-    },
-    reducers : {
-        startExamAction : (state, action) => {
-            let { question, answers} = action.payload
+// /** create reducer */
+// export const questionReducer = createSlice({
+//     name: 'questions',
+//     initialState : {
+//         queue: [],
+//         answers : [],
+//         trace : 0
+//     },
+//     reducers : {
+//         startExamAction : (state, action) => {
+//             let { question, answers} = action.payload
+//             return {
+//                 ...state,
+//                 queue : question,
+//                 answers
+//             }
+//         },
+//         moveNextAction : (state) => {
+//             return {
+//                 ...state,
+//                 trace : state.trace + 1
+//             }
+//         },
+//         movePrevAction : (state) => {
+//             return {
+//                 ...state,
+//                 trace : state.trace - 1
+//             }
+//         },
+//         resetAllAction : () => {
+//             return {
+//                 queue: [],
+//                 answers : [],
+//                 trace : 0
+//             }
+//         }
+//     }
+// })
+
+// export const { startExamAction, moveNextAction, movePrevAction, resetAllAction } = questionReducer.actions;
+
+// export default questionReducer.reducer;
+
+
+const initialState = {
+    queue: [],
+    answers: [],
+    trace: 0,
+};
+
+const questionReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'START_EXAM':
             return {
                 ...state,
-                queue : question,
-                answers
-            }
-        },
-        moveNextAction : (state) => {
+                queue: action.payload.questions,
+                answers: action.payload.answers,
+            };
+        case 'MOVE_NEXT':
             return {
                 ...state,
-                trace : state.trace + 1
-            }
-        },
-        movePrevAction : (state) => {
+                trace: state.trace + 1,
+            };
+        case 'MOVE_PREV':
             return {
                 ...state,
-                trace : state.trace - 1
-            }
-        },
-        resetAllAction : () => {
-            return {
-                queue: [],
-                answers : [],
-                trace : 0
-            }
-        }
+                trace: state.trace - 1,
+            };
+        case 'RESET_ALL':
+            return initialState;
+        default:
+            return state;
     }
-})
+};
 
-export const { startExamAction, moveNextAction, movePrevAction, resetAllAction } = questionReducer.actions;
+// Action creators
+export const startExamAction = (payload) => ({
+    type: 'START_EXAM',
+    payload,
+});
 
-export default questionReducer.reducer;
+export const moveNextAction = () => ({
+    type: 'MOVE_NEXT',
+});
+
+export const movePrevAction = () => ({
+    type: 'MOVE_PREV',
+});
+
+export const resetAllAction = () => ({
+    type: 'RESET_ALL',
+});
+
+export default questionReducer;
