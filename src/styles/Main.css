@@ -1,0 +1,53 @@
+.container ol li{
+    font-size: 1.4em;
+    color: #cecece;
+}
+
+.start{
+    display: flex;
+    justify-content: center;
+    padding-top: 2em;
+    width: 25%;
+    text-align: center;
+}
+
+.start .btn{
+    padding: .2em 1.7em;
+    border: none;
+    border-radius: .1em;
+    font-size: 1.2em;
+    color: #202020;
+    text-decoration: none;
+    background-color: #faff5a;
+    width: 100%;
+    display: inline-block;
+    
+}
+
+#form{
+    display: flex;
+    /* justify-content: center; */
+    margin-top: 4em;
+    flex-direction: column; /* Add this line */
+    align-items: center; /* Center align the form elements */
+}
+
+#form .userid{
+    padding: .7em 2em;
+    width: 90%;
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+    margin-bottom: 1em; /* Add margin to separate the input fields */
+    display: block; /* Ensure each input field is displayed as a block element */
+}
+
+.error {
+    color: #ff2a66;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background-color: rgba(255, 42, 102, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
