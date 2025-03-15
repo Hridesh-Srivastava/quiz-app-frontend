@@ -1,9 +1,7 @@
-"use client"
-
 import { useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setUserId } from "../redux/result_reducer.js"
+import { setUserData } from "../redux/result_reducer.js"
 import "../styles/Main.css"
 import axios from "axios"
 
@@ -12,36 +10,32 @@ export default function Main() {
   const regNumberRef = useRef(null)
   const emailRef = useRef(null)
   const courseYearRef = useRef(null)
+  const sectionRef = useRef(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   async function startQuiz(event) {
-    event.preventDefault() // Prevent default form submission
-    const name = nameRef.current.value
-    const registrationNumber = regNumberRef.current.value
-    const email = emailRef.current.value
-    const courseYear = courseYearRef.current.value
+    event.preventDefault()
+    const userData = {
+      name: nameRef.current.value,
+      registrationNumber: regNumberRef.current.value,
+      email: emailRef.current.value,
+      courseYear: courseYearRef.current.value,
+      section: sectionRef.current.value
+    }
 
-    if (name && registrationNumber && email && courseYear) {
+    if (Object.values(userData).every(value => value)) {
       setLoading(true)
       setError(null)
 
       try {
-        // Make API call to store user data
-        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/user`, {
-          name,
-          email,
-          registrationNumber,
-          courseYear,
-        })
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/user`, userData)
 
         if (response.data) {
           console.log("User registered successfully:", response.data)
-          // Store user ID in Redux
-          dispatch(setUserId(name))
-          // Navigate to quiz
+          dispatch(setUserData(userData))
           navigate("/quiz")
         }
       } catch (err) {
@@ -60,35 +54,51 @@ export default function Main() {
       <h1 className="title text-light">Quiz App</h1>
 
       <ol>
-        <li>You've to solve the questions one by one carrying equal marks.</li>
-        <li>5 points are awarded for each correct one.</li>
-        <li>This is the aptitude round test.</li>
-        <li>You can review and edit your answers before the quiz finishes.</li>
-        <li>The result will be declared after the successful completion.</li>
+        <li>You will be asked questions one after another.</li>
+        <li>5 points are awarded for each correct answer.</li>
+        <li>Each question can be answered in any order.</li>
+        <li>You can review and change answers before final submission.</li>
+        <li>The result will be declared at the end of the quiz.</li>
       </ol>
 
       {error && <div className="error">{error}</div>}
 
       <form id="form" onSubmit={startQuiz}>
-        <div>
-          <input name="name" ref={nameRef} className="userid" type="text" placeholder="Your Name" required />
-        </div>
-        <div>
-          <input
-            name="regNumber"
-            ref={regNumberRef}
-            className="userid"
-            type="text"
-            placeholder="Registration Number"
-            required
-          />
-        </div>
-        <div>
-          <input name="email" ref={emailRef} className="userid" type="email" placeholder="Email" required />
-        </div>
-        <div>
-          <input name="course" ref={courseYearRef} className="userid" type="text" placeholder="Course/Year" required />
-        </div>
+        <input 
+          ref={nameRef} 
+          className="userid" 
+          type="text" 
+          placeholder="Your Name" 
+          required
+        />
+        <input
+          ref={regNumberRef}
+          className="userid"
+          type="text"
+          placeholder="Registration Number"
+          required
+        />
+        <input 
+          ref={emailRef} 
+          className="userid" 
+          type="email" 
+          placeholder="Email" 
+          required
+        />
+        <input
+          ref={courseYearRef}
+          className="userid"
+          type="text"
+          placeholder="Course/Year"
+          required
+        />
+        <input
+          ref={sectionRef}
+          className="userid"
+          type="text"
+          placeholder="Section"
+          required
+        />
         <div className="start">
           <button type="submit" className="btn" disabled={loading}>
             {loading ? "Registering..." : "Start Quiz →"}

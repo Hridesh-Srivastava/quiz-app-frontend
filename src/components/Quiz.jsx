@@ -1,68 +1,95 @@
-import React, { useState } from 'react';
-import Questions from './Questions';
+"use client"
 
-import { MoveNextQuestion, MovePrevQuestion } from '../hooks/FetchQuestion';
-import { PushAnswer } from '../hooks/setResult';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { useState, useEffect } from "react"
+import Questions from "./Questions"
+import { useSelector, useDispatch } from "react-redux"
+import { Navigate } from "react-router-dom"
+import { moveNextAction, movePrevAction } from "../redux/question_reducer"
+import { pushResultAction } from "../redux/result_reducer"
+import { useFetchQuestion } from "../hooks/FetchQuestion"
 
 export default function Quiz() {
+  const [checked, setChecked] = useState(undefined)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const { queue, trace } = useSelector((state) => state.questions)
+  const result = useSelector((state) => state.result.result)
+  const dispatch = useDispatch()
+  const [{ isLoading, apiData, serverError }] = useFetchQuestion()
 
-    const [check, setChecked] = useState(undefined);
+  useEffect(() => {
+    setChecked(result[trace])
+  }, [trace, result])
 
-    const result = useSelector(state => state.result.result);
-    const { queue, trace } = useSelector(state => state.questions);
-    const dispatch = useDispatch();
+  function onNext() {
+    if (checked !== undefined) {
+      dispatch(pushResultAction({ trace, checked }))
 
-    /** next button event handler */
-    function onNext() {
-        console.log('Next click');
-
-        if (trace < queue.length) {
-            /** increase the trace value by one using MoveNextAction */
-            dispatch(MoveNextQuestion());
-            /** insert a new result in the array.  */
-            if (result.length <= trace) {
-                dispatch(PushAnswer(check));
-            }
+      if (trace === queue.length - 1) {
+        if (isAllAnswered()) {
+          setIsSubmitted(true)
         }
-        /** reset the value of the checked variable */
-        setChecked(undefined);
+      } else {
+        dispatch(moveNextAction())
+        setChecked(undefined)
+      }
     }
+  }
 
-    /** Prev button event handler */
-    function onPrev() {
-        console.log('previous click');
-
-        if (trace > 0) {
-            /** decrease the trace value by one using MovePrevQuestion */
-            dispatch(MovePrevQuestion());
-        }
+  function onPrev() {
+    if (trace > 0) {
+      dispatch(movePrevAction())
     }
+  }
 
-    function onChecked(check) {
-        console.log(check);
+  function onChecked(value) {
+    setChecked(value)
+  }
 
-        setChecked(check);
-    }
+  function isAllAnswered() {
+    return result.length === queue.length && !result.includes(undefined)
+  }
 
-    /*logic after the last question , finishing it. */
-    if (result.length && result.length >= queue.length) {
-        return <Navigate to={'/result'} replace={true}></Navigate>;
-    }
-
+  if (isLoading)
     return (
-        <div className='container'>
-            <h1 className='title text-light'>Quiz App</h1>
+      <div className="container">
+        <h3 className="text-light">Loading...</h3>
+      </div>
+    )
+  if (serverError)
+    return (
+      <div className="container">
+        <h3 className="text-light">Error: {serverError.message}</h3>
+      </div>
+    )
+  if (isSubmitted) return <Navigate to={"/result"} replace={true} />
 
-            {/* display questions */}
-            <Questions onChecked={onChecked} />
+  return (
+    <div className="container">
+      <h1 className="title text-light">Quiz Application</h1>
 
-            <div className='grid'>
-                {trace > 0 ? <button className='btn prev' onClick={onPrev}>Prev</button> : <div></div>}
-                <button className='btn next' onClick={onNext}>Next</button>
-            </div>
-        </div>
-    );
+      {queue && queue[trace] ? (
+        <Questions onChecked={onChecked} />
+      ) : (
+        <div className="text-light">No Questions Available</div>
+      )}
+
+      <div className="grid">
+        {trace > 0 ? (
+          <button className="btn prev" onClick={onPrev}>
+            Previous
+          </button>
+        ) : (
+          <div></div>
+        )}
+        <button className="btn next" onClick={onNext} disabled={checked === undefined}>
+          {trace === queue.length - 1
+            ? isAllAnswered()
+              ? "Submit Quiz"
+              : "Answer all questions to submit"
+            : "Next Question"}
+        </button>
+      </div>
+    </div>
+  )
 }
+

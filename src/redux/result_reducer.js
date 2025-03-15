@@ -3,29 +3,40 @@ import { createSlice } from "@reduxjs/toolkit"
 export const resultReducer = createSlice({
     name: 'result',
     initialState : {
-        userId : null,
-        result : []
+        userId: null,
+        email: null,
+        registrationNumber: null,
+        courseYear: null,
+        section: null,
+        result: [],
+        answers: []
     },
     reducers : {
-        setUserId : (state, action) => {
-            state.userId = action.payload
+        setUserData : (state, action) => {
+            const { name, email, registrationNumber, courseYear, section } = action.payload
+            state.userId = name
+            state.email = email
+            state.registrationNumber = registrationNumber
+            state.courseYear = courseYear
+            state.section = section
         },
         pushResultAction : (state, action) => {
-            state.result.push(action.payload)
-        },
-        updateResultAction : (state, action) => {
-            const { trace, checked } = action.payload;
-            state.result.fill(checked, trace, trace + 1)
+            const { trace, checked } = action.payload
+            state.result[trace] = checked
         },
         resetResultAction : () => {
             return {
-                userId : null,
-                result : []
+                userId: null,
+                email: null,
+                registrationNumber: null,
+                courseYear: null,
+                section: null,
+                result: [],
+                answers: []
             }
         }
     }
 })
 
-export const { setUserId, pushResultAction, resetResultAction, updateResultAction } = resultReducer.actions;
-
-export default resultReducer.reducer;
+export const { setUserData, pushResultAction, resetResultAction } = resultReducer.actions
+export default resultReducer.reducer
