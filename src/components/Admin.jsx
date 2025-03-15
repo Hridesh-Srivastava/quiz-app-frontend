@@ -13,7 +13,7 @@ export default function Admin() {
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/questions`)
-
+      console.log("Sync response:", response.data)
       setMessage(`Success! ${response.data.count} questions synced to database.`)
     } catch (error) {
       setMessage(`Error: ${error.response?.data?.error || error.message}`)
