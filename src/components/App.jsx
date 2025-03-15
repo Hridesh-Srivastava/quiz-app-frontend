@@ -1,4 +1,4 @@
-import "../styles/App.css"
+import "../styles/globals.css"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Main from "./Main"
 import Quiz from "./Quiz"

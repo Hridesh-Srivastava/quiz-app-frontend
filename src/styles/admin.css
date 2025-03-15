@@ -1,0 +1,108 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .admin-card {
+    margin-bottom: 2rem;
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .admin-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .admin-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--light);
+  }
+  
+  .admin-subtitle {
+    color: var(--gray-400);
+    font-size: 1rem;
+  }
+  
+  .admin-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .admin-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .admin-button svg {
+    margin-right: 0.5rem;
+  }
+  
+  .message {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-top: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .message.success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #6ee7b7;
+    border-left: 4px solid var(--success);
+  }
+  
+  .message.error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    border-left: 4px solid var(--danger);
+  }
+  
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .stat-card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-light);
+  }
+  
+  .stat-card-label {
+    font-size: 0.9rem;
+    color: var(--gray-400);
+  }
+  
+  @media (max-width: 768px) {
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  
