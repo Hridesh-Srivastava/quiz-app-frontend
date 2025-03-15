@@ -17,12 +17,14 @@
   .admin-title {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: var(--light);
+    color: var(--text-primary);
+    transition: color 0.3s ease;
   }
   
   .admin-subtitle {
-    color: var(--gray-400);
+    color: var(--text-secondary);
     font-size: 1rem;
+    transition: color 0.3s ease;
   }
   
   .admin-actions {
@@ -60,10 +62,18 @@
     border-left: 4px solid var(--success);
   }
   
+  .light-mode .message.success {
+    color: #047857;
+  }
+  
   .message.error {
     background-color: rgba(239, 68, 68, 0.1);
     color: #fca5a5;
     border-left: 4px solid var(--danger);
+  }
+  
+  .light-mode .message.error {
+    color: #b91c1c;
   }
   
   .stats-container {
@@ -74,29 +84,30 @@
   }
   
   .stat-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 1.5rem;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: var(--transition);
+    border: 1px solid var(--card-border);
+    transition: var(--transition), background 0.3s ease, border 0.3s ease;
   }
   
   .stat-card:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg);
   }
   
   .stat-card-value {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: var(--primary-light);
+    color: var(--primary);
   }
   
   .stat-card-label {
     font-size: 0.9rem;
-    color: var(--gray-400);
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
   }
   
   @media (max-width: 768px) {

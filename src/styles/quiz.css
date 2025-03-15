@@ -18,8 +18,9 @@
   
   .question-number {
     font-size: 0.9rem;
-    color: var(--gray-400);
+    color: var(--text-secondary);
     font-weight: 500;
+    transition: color 0.3s ease;
   }
   
   .question-text {
@@ -27,7 +28,8 @@
     font-weight: 600;
     margin-bottom: 1.5rem;
     line-height: 1.4;
-    color: var(--light);
+    color: var(--text-primary);
+    transition: color 0.3s ease;
   }
   
   .options-list {
@@ -59,20 +61,21 @@
     display: block;
     padding: 1rem 1.5rem;
     padding-left: 3rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: var(--border-radius);
     cursor: pointer;
     font-weight: 500;
     position: relative;
     z-index: 1;
-    transition: var(--transition);
+    transition: var(--transition), background 0.3s ease, border 0.3s ease, color 0.3s ease;
+    color: var(--text-primary);
   }
   
   .option-input:checked + .option-label {
     background: rgba(99, 102, 241, 0.1);
     border-color: var(--primary);
-    color: var(--primary-light);
+    color: var(--primary);
   }
   
   .option-input:checked + .option-label::before {
@@ -141,6 +144,11 @@
     border-radius: 4px;
     margin-bottom: 2rem;
     overflow: hidden;
+    transition: background 0.3s ease;
+  }
+  
+  .light-mode .progress-bar {
+    background: rgba(0, 0, 0, 0.1);
   }
   
   .progress-fill {

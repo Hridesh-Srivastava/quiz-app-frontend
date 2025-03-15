@@ -4,32 +4,45 @@ import Main from "./Main"
 import Quiz from "./Quiz"
 import Result from "./Result"
 import Admin from "./Admin"
+import Layout from "./Layout"
 import { CheckUserExist } from "../helper/helper"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: (
+      <Layout>
+        <Main />
+      </Layout>
+    ),
   },
   {
     path: "/quiz",
     element: (
-      <CheckUserExist>
-        <Quiz />
-      </CheckUserExist>
+      <Layout>
+        <CheckUserExist>
+          <Quiz />
+        </CheckUserExist>
+      </Layout>
     ),
   },
   {
     path: "/result",
     element: (
-      <CheckUserExist>
-        <Result />
-      </CheckUserExist>
+      <Layout>
+        <CheckUserExist>
+          <Result />
+        </CheckUserExist>
+      </Layout>
     ),
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: (
+      <Layout>
+        <Admin />
+      </Layout>
+    ),
   },
 ])
 

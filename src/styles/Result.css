@@ -20,9 +20,10 @@
   }
   
   .result-subtitle {
-    color: var(--gray-400);
+    color: var(--text-secondary);
     font-size: 1.1rem;
     font-weight: 400;
+    transition: color 0.3s ease;
   }
   
   .result-card {
@@ -49,12 +50,14 @@
     transform: translate(-50%, -50%);
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--light);
+    color: var(--text-primary);
+    transition: color 0.3s ease;
   }
   
   .score-label {
     font-size: 1rem;
-    color: var(--gray-400);
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
   }
   
   .user-details {
@@ -65,25 +68,28 @@
   }
   
   .detail-item {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    transition: background 0.3s ease, border 0.3s ease;
   }
   
   .detail-label {
     font-size: 0.8rem;
-    color: var(--gray-400);
+    color: var(--text-secondary);
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: color 0.3s ease;
   }
   
   .detail-value {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--light);
+    color: var(--text-primary);
     word-break: break-word;
+    transition: color 0.3s ease;
   }
   
   .stats-grid {
@@ -94,29 +100,30 @@
   }
   
   .stat-item {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 1.2rem;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: var(--transition);
+    border: 1px solid var(--card-border);
+    transition: var(--transition), background 0.3s ease, border 0.3s ease;
   }
   
   .stat-item:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg);
   }
   
   .stat-value {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: var(--primary-light);
+    color: var(--primary);
   }
   
   .stat-label {
     font-size: 0.9rem;
-    color: var(--gray-400);
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
   }
   
   .result-actions {
@@ -146,10 +153,97 @@
     border: 1px solid rgba(16, 185, 129, 0.2);
   }
   
+  .light-mode .pass-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  
   .fail-badge {
     background: rgba(239, 68, 68, 0.1);
     color: #fca5a5;
     border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  
+  .light-mode .fail-badge {
+    background: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  
+  /* Result table styles */
+  .result-table-container {
+    margin-top: 2rem;
+  }
+  
+  .result-table-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+  
+  .result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+  }
+  
+  .result-table th,
+  .result-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+    transition: border 0.3s ease;
+  }
+  
+  .result-table th {
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--card-bg);
+    transition: color 0.3s ease, background 0.3s ease;
+  }
+  
+  .result-table td {
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+  
+  .status-pass,
+  .status-fail {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .status-pass {
+    background: rgba(16, 185, 129, 0.1);
+    color: #6ee7b7;
+  }
+  
+  .light-mode .status-pass {
+    color: #047857;
+  }
+  
+  .status-fail {
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+  }
+  
+  .light-mode .status-fail {
+    color: #b91c1c;
+  }
+  
+  .no-data {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    transition: color 0.3s ease, background 0.3s ease, border 0.3s ease;
   }
   
   @media (max-width: 768px) {
@@ -173,6 +267,12 @@
   
     .result-actions .btn {
       width: 100%;
+    }
+  
+    .result-table th,
+    .result-table td {
+      padding: 0.5rem;
+      font-size: 0.9rem;
     }
   }
   

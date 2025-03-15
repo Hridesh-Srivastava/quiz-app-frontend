@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
+  /* Dark theme (default) */
   --primary: #6366f1;
   --primary-dark: #4f46e5;
   --primary-light: #a5b4fc;
@@ -19,9 +20,32 @@
   --gray-700: #334155;
   --gray-800: #1e293b;
   --gray-900: #0f172a;
+
+  /* Theme-specific variables */
+  --bg-primary: var(--gray-900);
+  --bg-secondary: var(--gray-800);
+  --text-primary: var(--light);
+  --text-secondary: var(--gray-300);
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(255, 255, 255, 0.07);
+  --input-border: rgba(255, 255, 255, 0.1);
+
   --border-radius: 12px;
   --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --transition: all 0.3s ease;
+}
+
+/* Light theme */
+.light-mode {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --input-border: rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -33,10 +57,16 @@
 body,
 html {
   height: 100%;
-  background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
-  color: var(--light);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
   font-family: "Montserrat", sans-serif;
   line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.app-layout {
+  position: relative;
+  min-height: 100vh;
 }
 
 .container {
@@ -53,10 +83,11 @@ html {
   font-weight: 700;
   text-align: center;
   margin-bottom: 2rem;
-  color: var(--light);
+  color: var(--text-primary);
   position: relative;
   display: inline-block;
   align-self: center;
+  transition: color 0.3s ease;
 }
 
 .title::after {
@@ -72,14 +103,14 @@ html {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: var(--box-shadow);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: var(--transition);
+  border: 1px solid var(--card-border);
+  transition: var(--transition), background 0.3s ease, border 0.3s ease;
 }
 
 .card:hover {
@@ -128,7 +159,7 @@ html {
 
 .btn-outline {
   background: transparent;
-  color: var(--light);
+  color: var(--text-primary);
   border: 2px solid var(--gray-300);
 }
 
@@ -163,7 +194,7 @@ html {
   height: 20px;
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top-color: var(--light);
+  border-top-color: var(--text-primary);
   animation: spin 1s ease-in-out infinite;
   margin-right: 10px;
 }
@@ -220,6 +251,150 @@ html {
   margin-top: 2rem;
 }
 
+/* Theme toggle styles */
+.theme-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.theme-toggle {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--box-shadow);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* About Us styles */
+.about-us-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  transition: var(--transition);
+}
+
+.about-us-toggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.about-us-toggle:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.about-us-content {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 350px;
+  max-width: calc(100vw - 40px);
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--card-border);
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.about-us-content.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.about-us-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+}
+
+.about-us-description {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.about-us-features-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-primary);
+}
+
+.about-us-features {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.about-us-feature-item {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.about-us-feature-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.about-us-footer {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--card-border);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.about-us-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.about-us-footer a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -231,6 +406,10 @@ html {
 
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-us-content {
+    width: 300px;
   }
 }
 
