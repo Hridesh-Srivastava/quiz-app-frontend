@@ -137,7 +137,7 @@ export default function Main() {
             id="regNumber"
             className="form-control"
             type="text"
-            placeholder="Enter your registration number"
+            placeholder="Enter your registration number : DD"
             required
           />
         </div>
