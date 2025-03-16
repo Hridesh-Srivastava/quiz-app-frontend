@@ -7,41 +7,62 @@ import Admin from "./Admin"
 import Layout from "./Layout"
 import { CheckUserExist } from "../helper/helper"
 
+// Add error handling
+const ErrorBoundary = ({ children }) => {
+  try {
+    return children
+  } catch (error) {
+    console.error("Error in routing:", error)
+    return <div className="error-page">Something went wrong. Please try again.</div>
+  }
+}
+
+// Create loading component
+const Loading = () => <div className="loading-container">Loading...</div>
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Layout>
-        <Main />
-      </Layout>
+      <ErrorBoundary>
+        <Layout>
+          <Main />
+        </Layout>
+      </ErrorBoundary>
     ),
   },
   {
     path: "/quiz",
     element: (
-      <Layout>
-        <CheckUserExist>
-          <Quiz />
-        </CheckUserExist>
-      </Layout>
+      <ErrorBoundary>
+        <Layout>
+          <CheckUserExist>
+            <Quiz />
+          </CheckUserExist>
+        </Layout>
+      </ErrorBoundary>
     ),
   },
   {
     path: "/result",
     element: (
-      <Layout>
-        <CheckUserExist>
-          <Result />
-        </CheckUserExist>
-      </Layout>
+      <ErrorBoundary>
+        <Layout>
+          <CheckUserExist>
+            <Result />
+          </CheckUserExist>
+        </Layout>
+      </ErrorBoundary>
     ),
   },
   {
     path: "/admin",
     element: (
-      <Layout>
-        <Admin />
-      </Layout>
+      <ErrorBoundary>
+        <Layout>
+          <Admin />
+        </Layout>
+      </ErrorBoundary>
     ),
   },
 ])

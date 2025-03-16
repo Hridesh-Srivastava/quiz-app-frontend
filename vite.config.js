@@ -5,12 +5,15 @@
 // export default defineConfig({
 //   plugins: [react()],
 // })
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Set this for correct pathing
-});
+  build: {
+    // Generate sourcemaps for better debugging
+    sourcemap: true,
+  },
+})
 
