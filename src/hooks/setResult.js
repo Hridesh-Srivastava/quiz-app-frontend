@@ -11,7 +11,7 @@ export const PushAnswer = (result) => async (dispatch) => {
 
 export const updateResult = (index) => async (dispatch) => {
   try {
-    dispatch(Action.updateResultAction(index))
+    dispatch(Action.pushResultAction(index))
   } catch (error) {
     console.log(error)
   }
