@@ -105,6 +105,7 @@ export default function Main() {
             <li>You can review and change answers before final submission.</li>
             <li>The quiz has a time limit of 30 minutes.</li>
             <li>The result will be declared at the end of the quiz.</li>
+            <h2>All the very best!</h2>
           </ul>
         </div>
       </div>
