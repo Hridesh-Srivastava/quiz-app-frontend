@@ -40,7 +40,7 @@ export const usePublishResult = (resultData) => {
       const apiUrl = `${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/result`
       console.log("Posting to URL:", apiUrl)
 
-      const response = await postServerData(apiUrl, resultData)
+      const response = await postServerData(apiUrl, resultData, { timeout: 8000 })
 
       if (response?.error) {
         throw new Error(response.message || "Failed to save result")
@@ -50,17 +50,17 @@ export const usePublishResult = (resultData) => {
     } catch (error) {
       console.error("Error saving result:", error)
 
-      // Retry once after a short delay
+      // Retry once after a short delay with exponential backoff
       setTimeout(async () => {
         try {
           console.log("Retrying result submission...")
           const apiUrl = `${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/result`
-          const response = await postServerData(apiUrl, resultData)
+          const response = await postServerData(apiUrl, resultData, { timeout: 10000 }) // Longer timeout for retry
           console.log("Retry result:", response)
         } catch (retryError) {
           console.error("Retry failed:", retryError)
         }
-      }, 2000)
+      }, 3000) // 3 second delay before retry
     }
   })()
 }

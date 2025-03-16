@@ -30,7 +30,7 @@ export async function getServerData(url, callback) {
     console.log("Fetching data from:", url)
 
     const response = await axios.get(url, {
-      timeout: 10000, // 10 second timeout
+      timeout: 8000, // 8 second timeout
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -54,16 +54,17 @@ export async function getServerData(url, callback) {
 }
 
 /** post server data with better error handling */
-export async function postServerData(url, result, callback) {
+export async function postServerData(url, result, options = {}, callback) {
   try {
     console.log("Posting data to:", url)
 
     const response = await axios.post(url, result, {
-      timeout: 10000, // 10 second timeout
+      timeout: options.timeout || 8000, // 8 second timeout by default
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      ...options,
     })
 
     const data = response.data
@@ -80,5 +81,10 @@ export async function postServerData(url, result, callback) {
 
     return callback ? callback(errorData) : errorData
   }
+}
+
+// Helper to check if all questions are answered
+export function isAllAnswered(result, queueLength) {
+  return result.length === queueLength && !result.includes(undefined)
 }
 

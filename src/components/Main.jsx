@@ -24,7 +24,9 @@ export default function Main() {
       const regNumber = localStorage.getItem("lastRegistrationNumber")
       if (regNumber) {
         try {
-          await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${regNumber}`)
+          await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${regNumber}`, {
+            timeout: 3000,
+          })
           localStorage.removeItem("lastRegistrationNumber")
         } catch (error) {
           console.log("Error clearing previous timer (non-critical):", error.message)
@@ -51,7 +53,9 @@ export default function Main() {
       setError(null)
 
       try {
-        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/user`, userData)
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/user`, userData, {
+          timeout: 5000,
+        })
 
         if (response.data) {
           console.log("User registered successfully:", response.data)

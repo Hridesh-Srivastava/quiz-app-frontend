@@ -3,14 +3,23 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import * as Action from "../redux/question_reducer"
+import axios from "axios"
 
 // Create a helper for API calls with error handling
 const fetchFromAPI = async (url) => {
-  const response = await fetch(url)
-  if (!response.ok) {
-    throw new Error(`API error: ${response.status} ${response.statusText}`)
+  try {
+    const response = await axios.get(url, {
+      timeout: 8000, // 8 second timeout
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error("API fetch error:", error)
+    throw new Error(error.response?.data?.error || `API error: ${error.message}`)
   }
-  return response.json()
 }
 
 export const useFetchQuestion = () => {

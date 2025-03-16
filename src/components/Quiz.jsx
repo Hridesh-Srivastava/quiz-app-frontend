@@ -13,6 +13,7 @@ import "../styles/quiz.css"
 export default function Quiz() {
   const [checked, setChecked] = useState(undefined)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { queue, trace } = useSelector((state) => state.questions)
   const { result, registrationNumber } = useSelector((state) => state.result)
   const dispatch = useDispatch()
@@ -28,11 +29,15 @@ export default function Quiz() {
 
       if (trace === queue.length - 1) {
         if (isAllAnswered()) {
+          setIsSubmitting(true)
           setIsSubmitted(true)
           // Clear timer data on manual submission - don't block if it fails
           if (registrationNumber) {
             try {
-              await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`)
+              await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`, {
+                timeout: 3000,
+              })
+              console.log("Timer data cleared successfully on quiz submission")
             } catch (error) {
               console.log("Error clearing timer data (non-critical):", error.message)
             }
@@ -150,10 +155,18 @@ export default function Quiz() {
         ) : (
           <div></div>
         )}
-        <button className="btn btn-primary next-button" onClick={onNext} disabled={checked === undefined}>
+        <button
+          className="btn btn-primary next-button"
+          onClick={onNext}
+          disabled={checked === undefined || isSubmitting}
+        >
           {trace === queue.length - 1 ? (
             isAllAnswered() ? (
-              "Submit Quiz"
+              isSubmitting ? (
+                "Submitting..."
+              ) : (
+                "Submit Quiz"
+              )
             ) : (
               "Answer all questions to submit"
             )
