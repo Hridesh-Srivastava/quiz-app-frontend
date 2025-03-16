@@ -5,7 +5,7 @@ export const PushAnswer = (result) => async (dispatch) => {
   try {
     await dispatch(Action.pushResultAction(result))
   } catch (error) {
-    console.log(error)
+    console.error("Error in PushAnswer:", error)
   }
 }
 
@@ -13,7 +13,7 @@ export const updateResult = (index) => async (dispatch) => {
   try {
     dispatch(Action.pushResultAction(index))
   } catch (error) {
-    console.log(error)
+    console.error("Error in updateResult:", error)
   }
 }
 
@@ -25,15 +25,42 @@ export const usePublishResult = (resultData) => {
         throw new Error("Couldn't get Result")
       }
 
-      const response = await postServerData(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/result`, resultData)
+      console.log(
+        "Publishing result data:",
+        JSON.stringify({
+          username,
+          email,
+          registrationNumber,
+          courseYear,
+          section,
+          resultLength: result.length,
+        }),
+      )
 
-      if (!response) {
-        throw new Error("Failed to save result")
+      const apiUrl = `${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/result`
+      console.log("Posting to URL:", apiUrl)
+
+      const response = await postServerData(apiUrl, resultData)
+
+      if (response?.error) {
+        throw new Error(response.message || "Failed to save result")
       }
 
       console.log("Result saved successfully:", response)
     } catch (error) {
       console.error("Error saving result:", error)
+
+      // Retry once after a short delay
+      setTimeout(async () => {
+        try {
+          console.log("Retrying result submission...")
+          const apiUrl = `${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/result`
+          const response = await postServerData(apiUrl, resultData)
+          console.log("Retry result:", response)
+        } catch (retryError) {
+          console.error("Retry failed:", retryError)
+        }
+      }, 2000)
     }
   })()
 }

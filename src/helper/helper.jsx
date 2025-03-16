@@ -28,16 +28,27 @@ export function CheckUserExist({ children }) {
 export async function getServerData(url, callback) {
   try {
     console.log("Fetching data from:", url)
-    const response = await axios.get(url)
+
+    const response = await axios.get(url, {
+      timeout: 10000, // 10 second timeout
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+
     const data = response.data
     return callback ? callback(data) : data
   } catch (error) {
     console.error("API Error:", error)
+
     // Return a structured error
     const errorData = {
       error: true,
       message: error.response?.data?.error || error.message || "Unknown error occurred",
+      status: error.response?.status,
     }
+
     return callback ? callback(errorData) : errorData
   }
 }
@@ -46,16 +57,27 @@ export async function getServerData(url, callback) {
 export async function postServerData(url, result, callback) {
   try {
     console.log("Posting data to:", url)
-    const response = await axios.post(url, result)
+
+    const response = await axios.post(url, result, {
+      timeout: 10000, // 10 second timeout
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+
     const data = response.data
     return callback ? callback(data) : data
   } catch (error) {
     console.error("API Error:", error)
+
     // Return a structured error
     const errorData = {
       error: true,
       message: error.response?.data?.error || error.message || "Unknown error occurred",
+      status: error.response?.status,
     }
+
     return callback ? callback(errorData) : errorData
   }
 }
