@@ -18,6 +18,8 @@ export default function QuizTimer() {
   const timerRef = useRef(null)
   const lastSyncRef = useRef(Date.now())
   const syncIntervalRef = useRef(15) // Sync every 15 seconds
+  const retryCountRef = useRef(0)
+  const maxRetries = 3
 
   // Initialize timer locally without relying on server
   useEffect(() => {
@@ -27,16 +29,24 @@ export default function QuizTimer() {
     // Only try to sync with server if we have a registration number
     if (registrationNumber) {
       const syncTimerWithServer = async () => {
+        if (retryCountRef.current >= maxRetries) {
+          console.log("Max retries reached, using local timer only")
+          if (isMounted) setTimerError(true)
+          return
+        }
+
         try {
-          // Try to get existing timer
+          console.log(`Attempting to sync timer (attempt ${retryCountRef.current + 1}/${maxRetries})`)
+          // Try to get existing timer with increased timeout
           const response = await axios.get(
             `${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`,
-            { timeout: 5000 }, // 5 second timeout
+            { timeout: 8000 }, // Increased timeout to 8 seconds
           )
 
           if (response.data && response.data.timeLeft > 0 && isMounted) {
             setTimeLeft(response.data.timeLeft)
             console.log("Timer synced with server:", response.data.timeLeft)
+            retryCountRef.current = 0 // Reset retry counter on success
           } else if (isMounted) {
             // If no timer exists or time is up, create a new one
             const createResponse = await axios.post(
@@ -46,14 +56,28 @@ export default function QuizTimer() {
                 timeLeft: durationSeconds,
                 startTime: Date.now(),
               },
-              { timeout: 5000 },
+              { timeout: 8000 },
             )
             console.log("New timer created:", createResponse.data)
+            retryCountRef.current = 0 // Reset retry counter on success
           }
           if (isMounted) setTimerError(false)
         } catch (error) {
-          console.log("Timer initialization will use local state only:", error.message)
-          if (isMounted) setTimerError(true)
+          retryCountRef.current++
+          console.log(`Timer initialization error (attempt ${retryCountRef.current}/${maxRetries}):`, error.message)
+
+          if (isMounted) {
+            setTimerError(true)
+
+            // Retry with exponential backoff if we haven't reached max retries
+            if (retryCountRef.current < maxRetries) {
+              const backoffTime = Math.min(1000 * Math.pow(2, retryCountRef.current), 10000)
+              console.log(`Retrying in ${backoffTime}ms...`)
+              setTimeout(syncTimerWithServer, backoffTime)
+            } else {
+              console.log("Using local timer only after max retries")
+            }
+          }
         }
       }
 
@@ -79,6 +103,7 @@ export default function QuizTimer() {
           const timeSinceLastSync = (now - lastSyncRef.current) / 1000
 
           // Only try to update server periodically to reduce API calls
+          // And only if we're not in error state
           if (!timerError && registrationNumber && timeSinceLastSync >= syncIntervalRef.current) {
             lastSyncRef.current = now
 
@@ -88,14 +113,18 @@ export default function QuizTimer() {
                 {
                   timeLeft: newTime,
                 },
-                { timeout: 3000 },
-              ) // 3 second timeout
+                { timeout: 5000 },
+              ) // 5 second timeout
+              .then(() => {
+                // Reset sync interval on success
+                syncIntervalRef.current = 15
+              })
               .catch((err) => {
                 console.log("Using local timer only:", err.message)
                 setTimerError(true)
 
                 // Increase sync interval on error to reduce failed requests
-                syncIntervalRef.current = 30 // Try again in 30 seconds
+                syncIntervalRef.current = Math.min(syncIntervalRef.current * 2, 60) // Exponential backoff up to 60 seconds
               })
           }
 
@@ -132,7 +161,7 @@ export default function QuizTimer() {
     if (registrationNumber) {
       try {
         await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`, {
-          timeout: 3000,
+          timeout: 5000,
         })
         console.log("Timer data cleared successfully")
       } catch (error) {
@@ -172,6 +201,11 @@ export default function QuizTimer() {
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
         <span className="timer-text">{formatTime()}</span>
+        {timerError && (
+          <span className="timer-offline-indicator" title="Using local timer (offline mode)">
+            ⚠️
+          </span>
+        )}
       </div>
     </div>
   )
