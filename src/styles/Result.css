@@ -276,4 +276,44 @@
     }
   }
   
+  .score-display {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .score-circle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .score-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .score-circle {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .score-value {
+      font-size: 2rem;
+    }
+  }
+  
   

@@ -1,6 +1,5 @@
 "use client"
 import "../styles/result.css"
-import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { attempts_Number, earnPoints_Number } from "../helper/helper"
@@ -21,7 +20,7 @@ export default function Result() {
   useEffect(() => {
     const timer = setTimeout(() => {
       alert("Thank you for your participation!")
-    }, 500) 
+    }, 500)
     return () => clearTimeout(timer)
   }, [])
 
@@ -36,7 +35,6 @@ export default function Result() {
     points: earnPoints,
     achieved: flag ? "Passed" : "Failed",
   })
-
 
   return (
     <div className="container result-container">

@@ -413,3 +413,51 @@ html {
   }
 }
 
+/* About Us styles */
+.about-us-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  transition: var(--transition);
+}
+
+.about-us-toggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.about-us-toggle:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .about-us-container {
+    bottom: 70px;
+    right: 10px;
+  }
+
+  .about-us-toggle {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .about-us-content {
+    bottom: 120px;
+    right: 10px;
+    width: 300px;
+  }
+}
+
