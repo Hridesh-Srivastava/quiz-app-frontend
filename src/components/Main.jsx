@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setUserData } from "../redux/result_reducer.js"
@@ -17,6 +17,23 @@ export default function Main() {
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  // Clear any existing timer data when returning to registration page
+  useEffect(() => {
+    const clearPreviousTimer = async () => {
+      const regNumber = localStorage.getItem("lastRegistrationNumber")
+      if (regNumber) {
+        try {
+          await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${regNumber}`)
+          localStorage.removeItem("lastRegistrationNumber")
+        } catch (error) {
+          console.error("Error clearing previous timer:", error)
+        }
+      }
+    }
+
+    clearPreviousTimer()
+  }, [])
 
   async function startQuiz(event) {
     event.preventDefault()
@@ -38,6 +55,10 @@ export default function Main() {
         if (response.data) {
           console.log("User registered successfully:", response.data)
           dispatch(setUserData(userData))
+
+          // Store registration number for later cleanup
+          localStorage.setItem("lastRegistrationNumber", userData.registrationNumber)
+
           navigate("/quiz")
         }
       } catch (err) {
@@ -82,6 +103,7 @@ export default function Main() {
             <li>5 points are awarded for each correct answer.</li>
             <li>Each question should be answered in an order.</li>
             <li>You can review and change answers before final submission.</li>
+            <li>The quiz has a time limit of 2 minutes.</li>
             <li>The result will be declared at the end of the quiz.</li>
           </ul>
         </div>

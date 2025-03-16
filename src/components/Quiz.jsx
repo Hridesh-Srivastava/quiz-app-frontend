@@ -6,13 +6,15 @@ import { Navigate } from "react-router-dom"
 import { moveNextAction, movePrevAction } from "../redux/question_reducer"
 import { pushResultAction } from "../redux/result_reducer"
 import { useFetchQuestion } from "../hooks/FetchQuestion"
+import QuizTimer from "./QuizTimer"
+import axios from "axios"
 import "../styles/quiz.css"
 
 export default function Quiz() {
   const [checked, setChecked] = useState(undefined)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const { queue, trace } = useSelector((state) => state.questions)
-  const result = useSelector((state) => state.result.result)
+  const { result, registrationNumber } = useSelector((state) => state.result)
   const dispatch = useDispatch()
   const [{ isLoading, serverError }] = useFetchQuestion()
 
@@ -20,13 +22,21 @@ export default function Quiz() {
     setChecked(result[trace])
   }, [trace, result])
 
-  function onNext() {
+  async function onNext() {
     if (checked !== undefined) {
       dispatch(pushResultAction({ trace, checked }))
 
       if (trace === queue.length - 1) {
         if (isAllAnswered()) {
           setIsSubmitted(true)
+          // Clear timer data on manual submission
+          if (registrationNumber) {
+            try {
+              await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`)
+            } catch (error) {
+              console.error("Error clearing timer data:", error)
+            }
+          }
         }
       } else {
         dispatch(moveNextAction())
@@ -75,6 +85,9 @@ export default function Quiz() {
   return (
     <div className="container quiz-container">
       <h1 className="title">HSST Quiz in Progress</h1>
+
+      {/* Timer component */}
+      <QuizTimer />
 
       <div className="progress-bar">
         <div className="progress-fill" style={{ width: `${progressPercentage}%` }}></div>

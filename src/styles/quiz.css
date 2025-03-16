@@ -181,3 +181,63 @@
   }
 }
 
+.quiz-timer {
+  position: fixed;
+  top: 20px;
+  left: 20px; 
+  z-index: 100;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #000;
+  color: rgb(26, 251, 255);
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+  border: 2px solid blue;
+}
+
+.timer-warning {
+  background-color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+.timer-icon {
+  margin-right: 4px;
+}
+
+.timer-text {
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .quiz-timer {
+    top: 10px;
+    left: 10px;
+  }
+
+  .timer-display {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
