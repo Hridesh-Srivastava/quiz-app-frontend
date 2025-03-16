@@ -29,12 +29,12 @@ export default function Quiz() {
       if (trace === queue.length - 1) {
         if (isAllAnswered()) {
           setIsSubmitted(true)
-          // Clear timer data on manual submission
+          // Clear timer data on manual submission - don't block if it fails
           if (registrationNumber) {
             try {
               await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`)
             } catch (error) {
-              console.error("Error clearing timer data:", error)
+              console.log("Error clearing timer data (non-critical):", error.message)
             }
           }
         }

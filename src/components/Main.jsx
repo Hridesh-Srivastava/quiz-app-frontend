@@ -27,7 +27,8 @@ export default function Main() {
           await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${regNumber}`)
           localStorage.removeItem("lastRegistrationNumber")
         } catch (error) {
-          console.error("Error clearing previous timer:", error)
+          console.log("Error clearing previous timer (non-critical):", error.message)
+          localStorage.removeItem("lastRegistrationNumber")
         }
       }
     }
@@ -103,7 +104,7 @@ export default function Main() {
             <li>5 points are awarded for each correct answer.</li>
             <li>Each question should be answered in an order.</li>
             <li>You can review and change answers before final submission.</li>
-            <li>The quiz has a time limit of 30 minutes.</li>
+            <li>The quiz has a time limit of {import.meta.env.VITE_QUIZ_DURATION_MINUTES || 30} minutes.</li>
             <li>The result will be declared at the end of the quiz.</li>
             <h2>All the very best!</h2>
           </ul>
