@@ -103,7 +103,7 @@ export default function Main() {
             <li>5 points are awarded for each correct answer.</li>
             <li>Each question should be answered in an order.</li>
             <li>You can review and change answers before final submission.</li>
-            <li>The quiz has a time limit of 2 minutes.</li>
+            <li>The quiz has a time limit of 30 minutes.</li>
             <li>The result will be declared at the end of the quiz.</li>
           </ul>
         </div>
