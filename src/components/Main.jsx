@@ -252,8 +252,6 @@ export default function Main() {
   }, [])
 
   async function startQuiz(event) {
-    event.preventDefault()
-
     // Prevent default form submission which might cause page reload
     if (event) {
       event.preventDefault()

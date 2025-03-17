@@ -216,16 +216,16 @@ export default function Quiz() {
   const dispatch = useDispatch()
   const [{ isLoading, serverError }] = useFetchQuestion()
 
-  // Redirect if no userId is set
-  if (!userId) {
-    return <Navigate to={"/"} replace={true} />
-  }
-
   useEffect(() => {
     if (queue && queue.length > 0) {
       setChecked(result[trace])
     }
   }, [trace, result, queue])
+
+  // Redirect if no userId is set
+  if (!userId) {
+    return <Navigate to={"/"} replace={true} />
+  }
 
   async function onNext() {
     if (checked !== undefined) {
