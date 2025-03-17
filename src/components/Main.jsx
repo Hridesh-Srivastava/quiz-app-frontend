@@ -403,7 +403,6 @@ export default function Main() {
             <li>The quiz has a time limit of {import.meta.env.VITE_QUIZ_DURATION_MINUTES || 30} minutes.</li>
             <li>The result will be declared at the end of the quiz.</li>
           </ul>
-          <h2>All the very best!</h2>
         </div>
       </div>
 
