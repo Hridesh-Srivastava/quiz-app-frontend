@@ -1,79 +1,125 @@
-import "../styles/globals.css"
+// import "../styles/globals.css"
+// import { createBrowserRouter, RouterProvider } from "react-router-dom"
+// import Main from "./Main"
+// import Quiz from "./Quiz"
+// import Result from "./Result"
+// import Admin from "./Admin"
+// import Layout from "./Layout"
+// import { CheckUserExist } from "../helper/helper"
+
+// // Add error handling
+// const ErrorBoundary = ({ children }) => {
+//   try {
+//     return children
+//   } catch (error) {
+//     console.error("Error in routing:", error)
+//     return <div className="error-page">Something went wrong. Please try again.</div>
+//   }
+// }
+
+// // Create loading component
+// const Loading = () => <div className="loading-container">Loading...</div>
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: (
+//       <ErrorBoundary>
+//         <Layout>
+//           <Main />
+//         </Layout>
+//       </ErrorBoundary>
+//     ),
+//   },
+//   {
+//     path: "/quiz",
+//     element: (
+//       <ErrorBoundary>
+//         <Layout>
+//           <CheckUserExist>
+//             <Quiz />
+//           </CheckUserExist>
+//         </Layout>
+//       </ErrorBoundary>
+//     ),
+//   },
+//   {
+//     path: "/result",
+//     element: (
+//       <ErrorBoundary>
+//         <Layout>
+//           <CheckUserExist>
+//             <Result />
+//           </CheckUserExist>
+//         </Layout>
+//       </ErrorBoundary>
+//     ),
+//   },
+//   {
+//     path: "/admin",
+//     element: (
+//       <ErrorBoundary>
+//         <Layout>
+//           <Admin />
+//         </Layout>
+//       </ErrorBoundary>
+//     ),
+//   },
+// ])
+
+// function App() {
+//   return (
+//     <>
+//       <RouterProvider router={router} />
+//     </>
+//   )
+// }
+
+// export default App
+
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Main from "./Main"
-import Quiz from "./Quiz"
-import Result from "./Result"
-import Admin from "./Admin"
-import Layout from "./Layout"
-import { CheckUserExist } from "../helper/helper"
+import { Provider } from "react-redux"
+import { store } from "./redux/store"
 
-// Add error handling
-const ErrorBoundary = ({ children }) => {
-  try {
-    return children
-  } catch (error) {
-    console.error("Error in routing:", error)
-    return <div className="error-page">Something went wrong. Please try again.</div>
-  }
-}
+/** import components */
+import Main from "./components/Main"
+import Quiz from "./components/Quiz"
+import Result from "./components/Result"
+import { CheckUserExist } from "./helper/helper"
 
-// Create loading component
-const Loading = () => <div className="loading-container">Loading...</div>
-
+/** react routes */
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ErrorBoundary>
-        <Layout>
-          <Main />
-        </Layout>
-      </ErrorBoundary>
-    ),
+    element: <Main></Main>,
   },
   {
     path: "/quiz",
     element: (
-      <ErrorBoundary>
-        <Layout>
-          <CheckUserExist>
-            <Quiz />
-          </CheckUserExist>
-        </Layout>
-      </ErrorBoundary>
+      <CheckUserExist>
+        <Quiz />
+      </CheckUserExist>
     ),
   },
   {
     path: "/result",
     element: (
-      <ErrorBoundary>
-        <Layout>
-          <CheckUserExist>
-            <Result />
-          </CheckUserExist>
-        </Layout>
-      </ErrorBoundary>
-    ),
-  },
-  {
-    path: "/admin",
-    element: (
-      <ErrorBoundary>
-        <Layout>
-          <Admin />
-        </Layout>
-      </ErrorBoundary>
+      <CheckUserExist>
+        <Result />
+      </CheckUserExist>
     ),
   },
 ])
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </>
+    </Provider>
   )
 }
 
 export default App
+
 

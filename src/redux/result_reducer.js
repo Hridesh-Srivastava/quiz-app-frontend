@@ -1,42 +1,91 @@
+// import { createSlice } from "@reduxjs/toolkit"
+
+// export const resultReducer = createSlice({
+//     name: 'result',
+//     initialState : {
+//         userId: null,
+//         email: null,
+//         registrationNumber: null,
+//         courseYear: null,
+//         section: null,
+//         result: [],
+//         answers: []
+//     },
+//     reducers : {
+//         setUserData : (state, action) => {
+//             const { name, email, registrationNumber, courseYear, section } = action.payload
+//             state.userId = name
+//             state.email = email
+//             state.registrationNumber = registrationNumber
+//             state.courseYear = courseYear
+//             state.section = section
+//         },
+//         pushResultAction : (state, action) => {
+//             const { trace, checked } = action.payload
+//             state.result[trace] = checked
+//         },
+//         resetResultAction : () => {
+//             return {
+//                 userId: null,
+//                 email: null,
+//                 registrationNumber: null,
+//                 courseYear: null,
+//                 section: null,
+//                 result: [],
+//                 answers: []
+//             }
+//         }
+//     }
+// })
+
+// export const { setUserData, pushResultAction, resetResultAction } = resultReducer.actions
+// export default resultReducer.reducer
+
+
 import { createSlice } from "@reduxjs/toolkit"
 
 export const resultReducer = createSlice({
-    name: 'result',
-    initialState : {
-        userId: null,
-        email: null,
-        registrationNumber: null,
-        courseYear: null,
-        section: null,
-        result: [],
-        answers: []
+  name: "result",
+  initialState: {
+    userId: null,
+    username: "",
+    email: "",
+    registrationNumber: "",
+    courseYear: "",
+    section: "",
+    result: [],
+  },
+  reducers: {
+    setUserId: (state, action) => {
+      state.userId = action.payload
     },
-    reducers : {
-        setUserData : (state, action) => {
-            const { name, email, registrationNumber, courseYear, section } = action.payload
-            state.userId = name
-            state.email = email
-            state.registrationNumber = registrationNumber
-            state.courseYear = courseYear
-            state.section = section
-        },
-        pushResultAction : (state, action) => {
-            const { trace, checked } = action.payload
-            state.result[trace] = checked
-        },
-        resetResultAction : () => {
-            return {
-                userId: null,
-                email: null,
-                registrationNumber: null,
-                courseYear: null,
-                section: null,
-                result: [],
-                answers: []
-            }
-        }
-    }
+    setUserData: (state, action) => {
+      state.username = action.payload.username
+      state.email = action.payload.email
+      state.registrationNumber = action.payload.registrationNumber
+      state.courseYear = action.payload.courseYear || ""
+      state.section = action.payload.section || ""
+    },
+    pushResultAction: (state, action) => {
+      state.result[action.payload.trace] = action.payload.checked
+    },
+    updateResultAction: (state, action) => {
+      const { trace, checked } = action.payload
+      state.result[trace] = checked
+    },
+    resetResultAction: (state) => {
+      state.userId = null
+      state.username = ""
+      state.email = ""
+      state.registrationNumber = ""
+      state.courseYear = ""
+      state.section = ""
+      state.result = []
+    },
+  },
 })
 
-export const { setUserData, pushResultAction, resetResultAction } = resultReducer.actions
+export const { setUserId, setUserData, pushResultAction, updateResultAction, resetResultAction } = resultReducer.actions
+
 export default resultReducer.reducer
+

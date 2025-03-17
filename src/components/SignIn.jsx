@@ -3,7 +3,7 @@
 import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setUserData } from "../redux/result_reducer.js"
+import { setUserId, setUserData } from "../redux/result_reducer.js"
 import axios from "axios"
 
 export default function SignIn({ setError }) {
@@ -15,7 +15,11 @@ export default function SignIn({ setError }) {
   const navigate = useNavigate()
 
   const handleSignIn = async (e) => {
-    e.preventDefault()
+    // Prevent default form submission which might cause page reload
+    if (e) {
+      e.preventDefault()
+    }
+
     setLoading(true)
 
     try {
@@ -27,6 +31,8 @@ export default function SignIn({ setError }) {
         credentials.registrationNumber = regNumberRef.current.value
       }
 
+      console.log("Verifying user with credentials:", credentials)
+
       // Verify user
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/user/verify`,
@@ -37,7 +43,8 @@ export default function SignIn({ setError }) {
       if (response.data) {
         console.log("User verified successfully:", response.data)
 
-        // Set user data in Redux
+        // Set both userId and userData in Redux
+        dispatch(setUserId(response.data._id))
         dispatch(
           setUserData({
             username: response.data.username,
@@ -51,8 +58,10 @@ export default function SignIn({ setError }) {
         // Store registration number for later cleanup
         localStorage.setItem("lastRegistrationNumber", response.data.registrationNumber)
 
-        // Navigate to quiz
-        navigate("/quiz")
+        // Use a small timeout to ensure state is updated before navigation
+        setTimeout(() => {
+          navigate("/quiz")
+        }, 100)
       }
     } catch (err) {
       console.error("Error signing in:", err)
@@ -62,7 +71,6 @@ export default function SignIn({ setError }) {
       } else {
         setError("Failed to sign in. Please try again.")
       }
-    } finally {
       setLoading(false)
     }
   }

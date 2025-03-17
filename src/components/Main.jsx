@@ -214,7 +214,7 @@
 import { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setUserData } from "../redux/result_reducer.js"
+import { setUserId, setUserData } from "../redux/result_reducer.js"
 import "../styles/main.css"
 import axios from "axios"
 import SignIn from "./SignIn.jsx"
@@ -253,6 +253,12 @@ export default function Main() {
 
   async function startQuiz(event) {
     event.preventDefault()
+
+    // Prevent default form submission which might cause page reload
+    if (event) {
+      event.preventDefault()
+    }
+
     const userData = {
       username: nameRef.current.value,
       email: emailRef.current.value,
@@ -272,12 +278,26 @@ export default function Main() {
 
         if (response.data) {
           console.log("User registered successfully:", response.data)
-          dispatch(setUserData(userData))
+
+          // Set both userId and userData in Redux
+          dispatch(setUserId(response.data._id))
+          dispatch(
+            setUserData({
+              username: userData.username,
+              email: userData.email,
+              registrationNumber: userData.registrationNumber,
+              courseYear: userData.courseYear,
+              section: userData.section,
+            }),
+          )
 
           // Store registration number for later cleanup
           localStorage.setItem("lastRegistrationNumber", userData.registrationNumber)
 
-          navigate("/quiz")
+          // Use a small timeout to ensure state is updated before navigation
+          setTimeout(() => {
+            navigate("/quiz")
+          }, 100)
         }
       } catch (err) {
         console.error("Error registering user:", err)
@@ -288,7 +308,6 @@ export default function Main() {
         } else {
           setError("Failed to register user. Please try again.")
         }
-      } finally {
         setLoading(false)
       }
     } else {
@@ -342,10 +361,18 @@ export default function Main() {
       {error && <div className="error">{error}</div>}
 
       <div className="auth-toggle">
-        <button className={`toggle-btn ${!showSignIn ? "active" : ""}`} onClick={() => setShowSignIn(false)}>
+        <button
+          type="button"
+          className={`toggle-btn ${!showSignIn ? "active" : ""}`}
+          onClick={() => setShowSignIn(false)}
+        >
           Register
         </button>
-        <button className={`toggle-btn ${showSignIn ? "active" : ""}`} onClick={() => setShowSignIn(true)}>
+        <button
+          type="button"
+          className={`toggle-btn ${showSignIn ? "active" : ""}`}
+          onClick={() => setShowSignIn(true)}
+        >
           Sign In
         </button>
       </div>
