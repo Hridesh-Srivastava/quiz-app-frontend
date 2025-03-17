@@ -78,10 +78,11 @@
 // export default App
 
 
-import "../styles/globals.css"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Provider } from "react-redux"
-import { store } from "../redux/store"
+import store from "../redux/store.js"
+
+/** import components */
 import Main from "./Main"
 import Quiz from "./Quiz"
 import Result from "./Result"
@@ -89,6 +90,7 @@ import Admin from "./Admin"
 import Layout from "./Layout"
 import { CheckUserExist } from "../helper/helper"
 
+/** react routes */
 const router = createBrowserRouter([
   {
     path: "/",

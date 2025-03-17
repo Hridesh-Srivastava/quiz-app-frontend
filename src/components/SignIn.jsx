@@ -3,7 +3,7 @@
 import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setUserData } from "../redux/result_reducer.js"
+import { setUserId, setUserData } from "../redux/result_reducer.js"
 import axios from "axios"
 
 export default function SignIn({ setError }) {
@@ -16,7 +16,9 @@ export default function SignIn({ setError }) {
 
   const handleSignIn = async (e) => {
     // Prevent default form submission which might cause page reload
-    e.preventDefault()
+    if (e) {
+      e.preventDefault()
+    }
 
     setLoading(true)
 
@@ -41,10 +43,11 @@ export default function SignIn({ setError }) {
       if (response.data) {
         console.log("User verified successfully:", response.data)
 
-        // Set userData in Redux
+        // Set both userId and userData in Redux
+        dispatch(setUserId(response.data._id))
         dispatch(
           setUserData({
-            name: response.data.username,
+            username: response.data.username,
             email: response.data.email,
             registrationNumber: response.data.registrationNumber,
             courseYear: response.data.courseYear || "",

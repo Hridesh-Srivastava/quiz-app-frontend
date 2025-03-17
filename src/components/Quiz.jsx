@@ -204,6 +204,7 @@ import { moveNextAction, movePrevAction } from "../redux/question_reducer"
 import { pushResultAction } from "../redux/result_reducer"
 import { useFetchQuestion } from "../hooks/FetchQuestion"
 import QuizTimer from "./QuizTimer"
+import Questions from "./Questions"
 import axios from "axios"
 import "../styles/quiz.css"
 
@@ -310,26 +311,7 @@ export default function Quiz() {
             </span>
           </div>
 
-          <h2 className="question-text">{queue[trace].question}</h2>
-
-          <ul className="options-list">
-            {queue[trace].options.map((option, i) => (
-              <li key={i} className="option-item">
-                <input
-                  type="radio"
-                  id={`q${i}-option`}
-                  name="options"
-                  value={false}
-                  checked={checked === i}
-                  onChange={() => onChecked(i)}
-                  className="option-input"
-                />
-                <label htmlFor={`q${i}-option`} className="option-label">
-                  {option}
-                </label>
-              </li>
-            ))}
-          </ul>
+          <Questions onChecked={onChecked} />
         </div>
       ) : (
         <div className="card">

@@ -110,11 +110,8 @@ export function flagResult(totalPoints, earnPoints) {
 
 /** check user auth  */
 export function CheckUserExist({ children }) {
-  const userData = useSelector((state) => state.result)
-  // Check if any user data exists (name or email)
-  const isAuthenticated = userData && (userData.name || userData.email)
-
-  return isAuthenticated ? children : <Navigate to={"/"} replace={true} />
+  const auth = useSelector((state) => state.result.userId)
+  return auth ? children : <Navigate to={"/"} replace={true}></Navigate>
 }
 
 /** get server data with better error handling */

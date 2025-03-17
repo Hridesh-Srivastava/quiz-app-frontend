@@ -48,7 +48,7 @@ export const resultReducer = createSlice({
   name: "result",
   initialState: {
     userId: null,
-    name: "",
+    username: "",
     email: "",
     registrationNumber: "",
     courseYear: "",
@@ -60,14 +60,18 @@ export const resultReducer = createSlice({
       state.userId = action.payload
     },
     setUserData: (state, action) => {
-      state.name = action.payload.name
+      state.username = action.payload.username || action.payload.name
       state.email = action.payload.email
       state.registrationNumber = action.payload.registrationNumber
       state.courseYear = action.payload.courseYear || ""
       state.section = action.payload.section || ""
     },
     pushResultAction: (state, action) => {
-      state.result[action.payload.trace] = action.payload.checked
+      if (typeof action.payload === "object" && "trace" in action.payload) {
+        state.result[action.payload.trace] = action.payload.checked
+      } else {
+        state.result.push(action.payload)
+      }
     },
     updateResultAction: (state, action) => {
       const { trace, checked } = action.payload
@@ -75,7 +79,7 @@ export const resultReducer = createSlice({
     },
     resetResultAction: (state) => {
       state.userId = null
-      state.name = ""
+      state.username = ""
       state.email = ""
       state.registrationNumber = ""
       state.courseYear = ""
