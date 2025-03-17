@@ -1,5 +1,11 @@
 import { createRoot } from "react-dom/client"
 import "./styles/index.css"
+import "./styles/globals.css"
+import "./styles/App.css"
+import "./styles/main.css"
+import "./styles/quiz.css"
+import "./styles/result.css"
+import "./styles/admin.css"
 import App from "./components/App.jsx"
 
 /*Redux store here */
