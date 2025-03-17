@@ -299,16 +299,22 @@ export default function Quiz() {
       {/* Timer component */}
       <QuizTimer />
 
-      <div className="progress-bar">
-        <div className="progress-fill" style={{ width: `${progressPercentage}%` }}></div>
+      <div className="progress-container">
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: `${progressPercentage}%` }}></div>
+        </div>
+        <div className="progress-text">
+          <span>
+            Question {trace + 1} of {queue.length}
+          </span>
+          <span>{Math.round(progressPercentage)}% Complete</span>
+        </div>
       </div>
 
       {queue && queue[trace] ? (
-        <div className="card question-card">
+        <div className="question-card">
           <div className="question-header">
-            <span className="question-number">
-              Question {trace + 1} of {queue.length}
-            </span>
+            <span className="question-number">Question {trace + 1}</span>
           </div>
 
           <Questions onChecked={onChecked} />
@@ -336,7 +342,7 @@ export default function Quiz() {
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            Previous
+            <span>Previous</span>
           </button>
         ) : (
           <div></div>
@@ -349,16 +355,16 @@ export default function Quiz() {
           {trace === queue.length - 1 ? (
             isAllAnswered() ? (
               isSubmitting ? (
-                "Submitting..."
+                <span>Submitting...</span>
               ) : (
-                "Submit Quiz"
+                <span>Submit Quiz</span>
               )
             ) : (
-              "Answer all questions to submit"
+              <span>Answer all questions to submit</span>
             )
           ) : (
             <>
-              Next Question
+              <span>Next Question</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"

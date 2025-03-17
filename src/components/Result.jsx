@@ -112,6 +112,7 @@
 // }
 
 "use client"
+
 import "../styles/result.css"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
@@ -156,17 +157,17 @@ export default function Result() {
         <p className="result-subtitle">Your TechQuiz Performance</p>
       </div>
 
-      <div className="card result-card">
+      <div className="result-card">
         <div className="score-display">
           <div className="score-circle">
-            <svg width="150" height="150" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="54" fill="none" stroke="#1e293b" strokeWidth="12" />
+            <svg width="200" height="200" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="none" stroke="var(--bg-tertiary)" strokeWidth="12" />
               <circle
                 cx="60"
                 cy="60"
                 r="54"
                 fill="none"
-                stroke={flag ? "#10b981" : "#ef4444"}
+                stroke={flag ? "var(--success)" : "var(--danger)"}
                 strokeWidth="12"
                 strokeDasharray="339.292"
                 strokeDashoffset={339.292 * (1 - percentage / 100)}
@@ -175,6 +176,7 @@ export default function Result() {
               />
             </svg>
             <div className="score-value">{Math.round(percentage)}%</div>
+            <div className="score-label">{flag ? "Passed" : "Failed"}</div>
           </div>
         </div>
 
