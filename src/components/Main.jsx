@@ -162,7 +162,7 @@ export default function Main() {
           >
             Sign In
           </button>
-          <div className="slider"></div>
+          <div className="slider" style={{ transform: showSignIn ? 'translateX(100%)' : 'translateX(0)' }}></div>
         </div>
 
         {showSignIn ? (
@@ -343,6 +343,3 @@ export default function Main() {
     </div>
   )
 }
-
-
-
