@@ -28,26 +28,19 @@
 // })
 
 
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import path from "path"
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "./src/styles/globals.css";`, // Ensure the correct path to your global SCSS file
-      },
     },
   },
   build: {
@@ -64,5 +57,4 @@ export default defineConfig({
       },
     },
   },
-})
-
+});
