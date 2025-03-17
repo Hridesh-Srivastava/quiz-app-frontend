@@ -34,7 +34,7 @@ export default function Result() {
     section,
     attempts,
     points: earnPoints,
-    achieved: flag ? "Passed" : "Failed",
+
   })
 
   return (
