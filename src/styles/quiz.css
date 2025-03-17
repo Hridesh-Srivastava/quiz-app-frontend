@@ -1,4 +1,318 @@
-.quiz-container {
+/* .quiz-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.question-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition);
+  animation: fadeIn 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.question-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.question-number {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-full);
+}
+
+.question-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.options-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.option-item {
+  position: relative;
+  border-radius: var(--border-radius);
+  transition: all var(--transition);
+  overflow: hidden;
+}
+
+.option-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.option-label {
+  display: block;
+  padding: 1rem 1.5rem;
+  padding-left: 3.5rem;
+  background: var(--bg-tertiary);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  transition: all var(--transition);
+  color: var(--text-primary);
+}
+
+.option-label:hover {
+  transform: translateX(5px);
+  background: var(--bg-card-hover);
+}
+
+.option-input:checked + .option-label {
+  background: var(--primary-transparent);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.option-label::before {
+  content: "";
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--border-light);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+
+.option-input:checked + .option-label::before {
+  border-color: var(--primary);
+  background: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-transparent);
+}
+
+.option-input:checked + .option-label::after {
+  content: "";
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  background: white;
+  border-radius: 50%;
+  margin-left: 0.375rem;
+  transition: all var(--transition);
+}
+
+.navigation-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.prev-button,
+.next-button {
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  transition: all var(--transition);
+}
+
+.prev-button svg,
+.next-button svg {
+  transition: transform var(--transition);
+}
+
+.prev-button:hover:not(:disabled) svg {
+  transform: translateX(-5px);
+}
+
+.next-button:hover:not(:disabled) svg {
+  transform: translateX(5px);
+}
+
+.progress-container {
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  height: 0.5rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: var(--border-radius-full);
+  transition: width var(--transition);
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.quiz-timer {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 100;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  color: var(--accent);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--border-radius-full);
+  box-shadow: var(--shadow-md);
+  font-weight: 600;
+  font-size: 1.25rem;
+  border: 2px solid var(--accent);
+  transition: all var(--transition);
+}
+
+.timer-warning {
+  background: var(--danger-transparent);
+  color: var(--danger);
+  border-color: var(--danger);
+  animation: pulse 1s infinite;
+}
+
+.timer-icon {
+  color: currentColor;
+}
+
+.timer-text {
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+}
+
+.timer-offline-indicator {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .question-text {
+    font-size: 1.25rem;
+  }
+
+  .option-label {
+    padding: 0.75rem 1rem 0.75rem 3rem;
+  }
+
+  .option-label::before {
+    left: 1rem;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .option-input:checked + .option-label::after {
+    left: 1rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: 0.3125rem;
+  }
+
+  .quiz-timer {
+    position: static;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .timer-display {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .question-card {
+    padding: 1.5rem;
+  }
+
+  .navigation-buttons {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .prev-button {
+    order: 2;
+  }
+
+  .next-button {
+    order: 1;
+  }
+}
+ */
+
+
+ .quiz-container {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
