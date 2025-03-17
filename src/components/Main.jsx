@@ -3,9 +3,10 @@
 // import { useRef, useState, useEffect } from "react"
 // import { useDispatch } from "react-redux"
 // import { useNavigate } from "react-router-dom"
-// import { setUserData } from "../redux/result_reducer.js"
+// import { setUserId, setUserData } from "../redux/result_reducer.js"
 // import "../styles/main.css"
 // import axios from "axios"
+// import SignIn from "./SignIn.jsx"
 
 // export default function Main() {
 //   const nameRef = useRef(null)
@@ -15,6 +16,7 @@
 //   const sectionRef = useRef(null)
 //   const [loading, setLoading] = useState(false)
 //   const [error, setError] = useState(null)
+//   const [showSignIn, setShowSignIn] = useState(false)
 //   const dispatch = useDispatch()
 //   const navigate = useNavigate()
 
@@ -39,11 +41,15 @@
 //   }, [])
 
 //   async function startQuiz(event) {
-//     event.preventDefault()
+//     // Prevent default form submission which might cause page reload
+//     if (event) {
+//       event.preventDefault()
+//     }
+
 //     const userData = {
-//       name: nameRef.current.value,
-//       registrationNumber: regNumberRef.current.value,
+//       username: nameRef.current.value,
 //       email: emailRef.current.value,
+//       registrationNumber: regNumberRef.current.value,
 //       courseYear: courseYearRef.current.value,
 //       section: sectionRef.current.value,
 //     }
@@ -59,22 +65,46 @@
 
 //         if (response.data) {
 //           console.log("User registered successfully:", response.data)
-//           dispatch(setUserData(userData))
+
+//           // Set both userId and userData in Redux
+//           dispatch(setUserId(response.data._id))
+//           dispatch(
+//             setUserData({
+//               username: userData.username,
+//               email: userData.email,
+//               registrationNumber: userData.registrationNumber,
+//               courseYear: userData.courseYear,
+//               section: userData.section,
+//             }),
+//           )
 
 //           // Store registration number for later cleanup
 //           localStorage.setItem("lastRegistrationNumber", userData.registrationNumber)
 
-//           navigate("/quiz")
+//           // Use a small timeout to ensure state is updated before navigation
+//           setTimeout(() => {
+//             navigate("/quiz")
+//           }, 100)
 //         }
 //       } catch (err) {
 //         console.error("Error registering user:", err)
-//         setError(err.response?.data?.error || "Failed to register user. Please try again.")
-//       } finally {
+
+//         // Check for specific error types
+//         if (err.response?.data?.error && err.response.status === 409) {
+//           setError(err.response.data.error)
+//         } else {
+//           setError("Failed to register user. Please try again.")
+//         }
 //         setLoading(false)
 //       }
 //     } else {
 //       setError("Please fill out all fields correctly.")
 //     }
+//   }
+
+//   const toggleSignIn = () => {
+//     setShowSignIn(!showSignIn)
+//     setError(null) // Clear any errors when switching forms
 //   }
 
 //   return (
@@ -117,94 +147,115 @@
 
 //       {error && <div className="error">{error}</div>}
 
-//       <form id="form" onSubmit={startQuiz}>
-//         <div className="form-group">
-//           <label htmlFor="name">Full Name</label>
-//           <input
-//             ref={nameRef}
-//             id="name"
-//             className="form-control"
-//             type="text"
-//             placeholder="Enter your full name"
-//             required
-//           />
-//         </div>
-
-//         <div className="form-group">
-//           <label htmlFor="regNumber">Registration Number</label>
-//           <input
-//             ref={regNumberRef}
-//             id="regNumber"
-//             className="form-control"
-//             type="text"
-//             placeholder="Enter your registration number : DD"
-//             required
-//           />
-//         </div>
-
-//         <div className="form-group">
-//           <label htmlFor="email">Email Address</label>
-//           <input
-//             ref={emailRef}
-//             id="email"
-//             className="form-control"
-//             type="email"
-//             placeholder="Enter your email address"
-//             required
-//           />
-//         </div>
-
-//         <div className="form-group">
-//           <label htmlFor="courseYear">Course/Year</label>
-//           <input
-//             ref={courseYearRef}
-//             id="courseYear"
-//             className="form-control"
-//             type="text"
-//             placeholder="Enter your course and year"
-//             required
-//           />
-//         </div>
-
-//         <div className="form-group">
-//           <label htmlFor="section">Section</label>
-//           <input
-//             ref={sectionRef}
-//             id="section"
-//             className="form-control"
-//             type="text"
-//             placeholder="Enter your section"
-//             required
-//           />
-//         </div>
-
-//         <button type="submit" className="btn btn-primary start-button" disabled={loading}>
-//           {loading ? (
-//             <>
-//               <span className="loading"></span>
-//               Registering...
-//             </>
-//           ) : (
-//             <>
-//               Start Quiz
-//               <svg
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 width="20"
-//                 height="20"
-//                 viewBox="0 0 24 24"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 strokeWidth="2"
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//               >
-//                 <line x1="5" y1="12" x2="19" y2="12"></line>
-//                 <polyline points="12 5 19 12 12 19"></polyline>
-//               </svg>
-//             </>
-//           )}
+//       <div className="auth-toggle">
+//         <button
+//           type="button"
+//           className={`toggle-btn ${!showSignIn ? "active" : ""}`}
+//           onClick={() => setShowSignIn(false)}
+//         >
+//           Register
 //         </button>
-//       </form>
+//         <button
+//           type="button"
+//           className={`toggle-btn ${showSignIn ? "active" : ""}`}
+//           onClick={() => setShowSignIn(true)}
+//         >
+//           Sign In
+//         </button>
+//       </div>
+
+//       {showSignIn ? (
+//         <SignIn setError={setError} />
+//       ) : (
+//         <form id="form" onSubmit={startQuiz}>
+//           <div className="form-group">
+//             <label htmlFor="name">Full Name</label>
+//             <input
+//               ref={nameRef}
+//               id="name"
+//               className="form-control"
+//               type="text"
+//               placeholder="Enter your full name"
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="regNumber">Registration Number</label>
+//             <input
+//               ref={regNumberRef}
+//               id="regNumber"
+//               className="form-control"
+//               type="text"
+//               placeholder="Enter your registration number"
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="email">Email Address</label>
+//             <input
+//               ref={emailRef}
+//               id="email"
+//               className="form-control"
+//               type="email"
+//               placeholder="Enter your email address"
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="courseYear">Course/Year</label>
+//             <input
+//               ref={courseYearRef}
+//               id="courseYear"
+//               className="form-control"
+//               type="text"
+//               placeholder="Enter your course and year"
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="section">Section</label>
+//             <input
+//               ref={sectionRef}
+//               id="section"
+//               className="form-control"
+//               type="text"
+//               placeholder="Enter your section"
+//               required
+//             />
+//           </div>
+
+//           <button type="submit" className="btn btn-primary start-button" disabled={loading}>
+//             {loading ? (
+//               <>
+//                 <span className="loading"></span>
+//                 Registering...
+//               </>
+//             ) : (
+//               <>
+//                 Start Quiz
+//                 <svg
+//                   xmlns="http://www.w3.org/2000/svg"
+//                   width="20"
+//                   height="20"
+//                   viewBox="0 0 24 24"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   strokeWidth="2"
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                 >
+//                   <line x1="5" y1="12" x2="19" y2="12"></line>
+//                   <polyline points="12 5 19 12 12 19"></polyline>
+//                 </svg>
+//               </>
+//             )}
+//           </button>
+//         </form>
+//       )}
 //     </div>
 //   )
 // }
@@ -351,8 +402,8 @@ export default function Main() {
             <li>You can review and change answers before final submission.</li>
             <li>The quiz has a time limit of {import.meta.env.VITE_QUIZ_DURATION_MINUTES || 30} minutes.</li>
             <li>The result will be declared at the end of the quiz.</li>
-            <h2>All the very best!</h2>
           </ul>
+          <h2>All the very best!</h2>
         </div>
       </div>
 
