@@ -46,7 +46,11 @@
   gap: 1rem;
   width: 100%;
 
-  overflow: visible;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.rules-list::-webkit-scrollbar {
+  display: none; /* WebKit browsers */
 }
 
 .rules-list li {

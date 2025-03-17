@@ -63,7 +63,6 @@ export default function Result() {
               />
             </svg>
             <div className="score-value">{Math.round(percentage)}%</div>
-            <div className="score-label">{flag ? "Passed" : "Failed"}</div>
           </div>
         </div>
 
