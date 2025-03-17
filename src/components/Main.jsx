@@ -214,7 +214,7 @@
 import { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setUserId, setUserData } from "../redux/result_reducer.js"
+import { setUserData } from "../redux/result_reducer.js"
 import "../styles/main.css"
 import axios from "axios"
 import SignIn from "./SignIn.jsx"
@@ -253,9 +253,7 @@ export default function Main() {
 
   async function startQuiz(event) {
     // Prevent default form submission which might cause page reload
-    if (event) {
-      event.preventDefault()
-    }
+    event.preventDefault()
 
     const userData = {
       username: nameRef.current.value,
@@ -277,11 +275,10 @@ export default function Main() {
         if (response.data) {
           console.log("User registered successfully:", response.data)
 
-          // Set both userId and userData in Redux
-          dispatch(setUserId(response.data._id))
+          // Set userData in Redux
           dispatch(
             setUserData({
-              username: userData.username,
+              name: userData.username,
               email: userData.email,
               registrationNumber: userData.registrationNumber,
               courseYear: userData.courseYear,

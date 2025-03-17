@@ -48,7 +48,7 @@ export const resultReducer = createSlice({
   name: "result",
   initialState: {
     userId: null,
-    username: "",
+    name: "",
     email: "",
     registrationNumber: "",
     courseYear: "",
@@ -60,7 +60,7 @@ export const resultReducer = createSlice({
       state.userId = action.payload
     },
     setUserData: (state, action) => {
-      state.username = action.payload.username
+      state.name = action.payload.name
       state.email = action.payload.email
       state.registrationNumber = action.payload.registrationNumber
       state.courseYear = action.payload.courseYear || ""
@@ -75,7 +75,7 @@ export const resultReducer = createSlice({
     },
     resetResultAction: (state) => {
       state.userId = null
-      state.username = ""
+      state.name = ""
       state.email = ""
       state.registrationNumber = ""
       state.courseYear = ""

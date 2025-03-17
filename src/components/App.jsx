@@ -78,36 +78,52 @@
 // export default App
 
 
+import "../styles/globals.css"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Provider } from "react-redux"
-import { store } from "./redux/store"
+import { store } from "../redux/store"
+import Main from "./Main"
+import Quiz from "./Quiz"
+import Result from "./Result"
+import Admin from "./Admin"
+import Layout from "./Layout"
+import { CheckUserExist } from "../helper/helper"
 
-/** import components */
-import Main from "./components/Main"
-import Quiz from "./components/Quiz"
-import Result from "./components/Result"
-import { CheckUserExist } from "./helper/helper"
-
-/** react routes */
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: (
+      <Layout>
+        <Main />
+      </Layout>
+    ),
   },
   {
     path: "/quiz",
     element: (
-      <CheckUserExist>
-        <Quiz />
-      </CheckUserExist>
+      <Layout>
+        <CheckUserExist>
+          <Quiz />
+        </CheckUserExist>
+      </Layout>
     ),
   },
   {
     path: "/result",
     element: (
-      <CheckUserExist>
-        <Result />
-      </CheckUserExist>
+      <Layout>
+        <CheckUserExist>
+          <Result />
+        </CheckUserExist>
+      </Layout>
+    ),
+  },
+  {
+    path: "/admin",
+    element: (
+      <Layout>
+        <Admin />
+      </Layout>
     ),
   },
 ])
