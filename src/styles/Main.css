@@ -1,4 +1,4 @@
- .welcome-section {
+ /* .welcome-section {
   margin-bottom: 2rem;
   animation: fadeIn 0.6s ease-out;
   width: 100%;
@@ -49,7 +49,7 @@
   scrollbar-width: none;
 }
 .rules-list::-webkit-scrollbar {
-  display: none; /* WebKit browsers */
+  display: none; 
 }
 
 .rules-list li {
@@ -351,4 +351,302 @@
   .toggle-btn:last-child.active ~ .slider {
     transform: translateY(100%);
   }
+} */
+
+
+.welcome-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
+
+.rules-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--card-border);
+  transition: var(--transition);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.rules-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+}
+
+.rules-list {
+  list-style: none;
+  margin-left: 0.5rem;
+}
+
+.rules-list li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.rules-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.rules-list h2 {
+  margin-top: 1rem;
+  border-bottom: none;
+  color: var(--success);
+}
+
+.auth-toggle {
+  display: flex;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+
+.toggle-btn.active {
+  color: white;
+}
+
+/* Add this for the sliding animation */
+.auth-toggle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--border-radius);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.auth-toggle.sign-in::before {
+  transform: translateX(100%);
+}
+
+.auth-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.sign-in-form,
+#form {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--card-border);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.sign-in-method-toggle {
+  display: flex;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.method-btn {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 2;
+}
+
+.method-btn.active {
+  color: white;
+}
+
+/* Add this for the sliding animation */
+.sign-in-method-toggle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--border-radius);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.sign-in-method-toggle.email::before {
+  transform: translateX(0);
+}
+
+.sign-in-method-toggle.regNumber::before {
+  transform: translateX(100%);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.form-control::placeholder {
+  color: var(--gray-500);
+}
+
+.start-button,
+.sign-in-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.start-button svg,
+.sign-in-button svg {
+  transition: transform 0.3s ease;
+}
+
+.start-button:hover:not(:disabled) svg,
+.sign-in-button:hover:not(:disabled) svg {
+  transform: translateX(5px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .rules-card {
+    padding: 1.25rem;
+  }
+
+  .rules-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-control {
+    padding: 0.7rem 0.9rem;
+  }
+
+  .sign-in-form,
+  #form {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rules-card {
+    padding: 1rem;
+  }
+
+  .rules-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .sign-in-method-toggle {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sign-in-method-toggle::before {
+    width: 100%;
+    height: 50%;
+  }
+
+  .sign-in-method-toggle.regNumber::before {
+    transform: translateY(100%);
+  }
+
+  .form-control {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .sign-in-form,
+  #form {
+    padding: 1.25rem;
+  }
+
+  .start-button,
+  .sign-in-button {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Keep the auth toggle horizontal but make it more compact */
+  .toggle-btn {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .method-btn {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
