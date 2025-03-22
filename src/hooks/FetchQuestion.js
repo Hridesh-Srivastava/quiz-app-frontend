@@ -9,7 +9,7 @@ import axios from "axios"
 const fetchFromAPI = async (url) => {
   try {
     const response = await axios.get(url, {
-      timeout: 8000, // 8 second timeout
+      timeout: 8000, 
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
