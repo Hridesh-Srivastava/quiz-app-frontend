@@ -91,10 +91,6 @@ export default function Result() {
 
         <div className="stats-grid">
           <div className="stat-item">
-            <div className="stat-value">{earnPoints}</div>
-            <div className="stat-label">Points Earned</div>
-          </div>
-          <div className="stat-item">
             <div className="stat-value">{totalPoints}</div>
             <div className="stat-label">Max Points</div>
           </div>

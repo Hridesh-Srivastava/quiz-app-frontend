@@ -32,29 +32,24 @@ export default function Quiz() {
   }
 
   async function onNext() {
-    if (checked !== undefined) {
-      dispatch(pushResultAction({ trace, checked }))
-
-      if (trace === queue.length - 1) {
-        if (isAllAnswered()) {
-          setIsSubmitting(true)
-          setIsSubmitted(true)
-          // Clear timer data on manual submission - don't block if it fails
-          if (registrationNumber) {
-            try {
-              await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`, {
-                timeout: 3000,
-              })
-              console.log("Timer data cleared successfully on quiz submission")
-            } catch (error) {
-              console.log("Error clearing timer data (non-critical):", error.message)
-            }
-          }
+    dispatch(pushResultAction({ trace, checked }))
+    if (trace === queue.length - 1) {
+      setIsSubmitting(true)
+      setIsSubmitted(true)
+      // Clear timer data on manual submission - don't block if it fails
+      if (registrationNumber) {
+        try {
+          await axios.delete(`${import.meta.env.VITE_REACT_APP_SERVER_HOSTNAME}/api/timer/${registrationNumber}`, {
+            timeout: 3000,
+          })
+          console.log("Timer data cleared successfully on quiz submission")
+        } catch (error) {
+          console.log("Error clearing timer data (non-critical):", error.message)
         }
-      } else {
-        dispatch(moveNextAction())
-        setChecked(undefined)
       }
+    } else {
+      dispatch(moveNextAction())
+      setChecked(undefined)
     }
   }
 
@@ -66,10 +61,6 @@ export default function Quiz() {
 
   function onChecked(value) {
     setChecked(value)
-  }
-
-  function isAllAnswered() {
-    return result.length === queue.length && !result.includes(undefined)
   }
 
   if (isLoading)
@@ -153,17 +144,13 @@ export default function Quiz() {
         <button
           className="btn btn-primary next-button"
           onClick={onNext}
-          disabled={checked === undefined || isSubmitting}
+          disabled={isSubmitting}
         >
           {trace === queue.length - 1 ? (
-            isAllAnswered() ? (
-              isSubmitting ? (
-                <span>Submitting...</span>
-              ) : (
-                <span>Submit Quiz</span>
-              )
+            isSubmitting ? (
+              <span>Submitting...</span>
             ) : (
-              <span>Answer all questions to submit</span>
+              <span>Submit Quiz</span>
             )
           ) : (
             <>
@@ -189,4 +176,3 @@ export default function Quiz() {
     </div>
   )
 }
-
