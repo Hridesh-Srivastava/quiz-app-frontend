@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { getServerData } from "../helper/helper"
-import "../styles/result.css"
+import "../styles/Result.css"
 
 export default function ResultTable() {
   const [data, setData] = useState([])

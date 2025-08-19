@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setUserId, setUserData } from "../redux/result_reducer.js"
-import "../styles/main.css"
+import "../styles/Main.css"
 import axios from "axios"
 import SignIn from "./SignIn.jsx"
 

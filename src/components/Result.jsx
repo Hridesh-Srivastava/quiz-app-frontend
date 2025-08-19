@@ -1,6 +1,6 @@
 "use client"
 
-import "../styles/result.css"
+import "../styles/Result.css"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { attempts_Number, earnPoints_Number } from "../helper/helper"
