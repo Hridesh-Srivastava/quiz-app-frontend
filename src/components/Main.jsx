@@ -109,7 +109,7 @@ export default function Main() {
 
   return (
     <div className="container">
-      <h1 className="title">HSST TechQuiz Hub</h1>
+      <h1 className="title">SST TechQuiz Hub</h1>
 
       <div className="welcome-section">
         <div className="rules-card">
