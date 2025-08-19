@@ -131,7 +131,7 @@ export default function Main() {
               <line x1="16" y1="17" x2="8" y2="17"></line>
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
-            HSST Quiz Guidelines
+            SST Quiz Guidelines
           </h2>
           <ul className="rules-list">
             <li>You will be asked questions one after another.</li>
